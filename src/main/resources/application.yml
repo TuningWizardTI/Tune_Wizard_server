@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: tuneWizard
+  ## oracle
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@15.164.103.59:1521:xe
+    username: ti_cop
+    password: ti_cop1234
+
+chatgpt:
+  apikey:
+  model: gpt-4o # ?? ?? # ??
+openai:
+  url:
+    model: https://api.openai.com/v1/models
+    model-list: https://api.openai.com/vi/models/
+    legacy_promt: https://api.openai.com/v1/completions
+    prompt: https://api.openai.com/v1/chat/completions
+
+
+server:
+  port: 8080
