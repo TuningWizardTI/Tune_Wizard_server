@@ -9,7 +9,7 @@ import java.util.Map;
 public interface ChatGPTService {
     List<Map<String, Object>> modelList();
 
-    Map<String, Object> prompt(CompletionRequestDTO completionRequestDTO);
+    Map<String, Object> prompt(ChatCompletionDTO chatCompletionDTO);
 
     Map<String, Object> legacyPrompt(CompletionRequestDTO requestDTO);
     Map<String, Object> isValidModel (String modelName);

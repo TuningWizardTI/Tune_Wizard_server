@@ -1,12 +1,14 @@
 package com.hanati.cop.tuneWizard.service;
 
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanati.cop.tuneWizard.config.ChatGPTConfig;
 import com.hanati.cop.tuneWizard.dto.ChatCompletionDTO;
+import com.hanati.cop.tuneWizard.dto.ChatRequestMsgDTO;
 import com.hanati.cop.tuneWizard.dto.CompletionRequestDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -118,7 +120,7 @@ public class ChatGPTServiceImpl implements ChatGPTService{
     }
 
     @Override
-    public Map<String, Object> prompt(CompletionRequestDTO completionRequestDTO) {
+    public Map<String, Object> prompt(ChatCompletionDTO chatCompletionDTO) {
         log.debug("[+] 신규 프롬포트를 수행한다.");
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -127,33 +129,38 @@ public class ChatGPTServiceImpl implements ChatGPTService{
         HttpHeaders headers = chatGPTConfig.httpHeaders();
 
         // [STEP5] 통신을 위한 RestTemplate을 구성함
-        HttpEntity<CompletionRequestDTO> requestEntity = new HttpEntity<>(completionRequestDTO, headers);
+        HttpEntity<ChatCompletionDTO> requestEntity = new HttpEntity<>(chatCompletionDTO, headers);
+
         System.out.println(requestEntity);
         ResponseEntity<String> response = chatGPTConfig
                 .restTemplate()
-                .exchange(promptUrl, HttpMethod.POST, requestEntity, String.class);
+                .exchange(promptUrl
+                        , HttpMethod.POST
+                        , requestEntity
+                        , String.class);
 
         try {
             // [STEP6] String -> HashMap 역직렬화 구성
             ObjectMapper om = new ObjectMapper();
             resultMap = om.readValue(response.getBody(), new TypeReference<>(){});
         }catch (JsonProcessingException e) {
+            e.getStackTrace();
             log.debug("JsonMappingException ::"  + e.getMessage());
         }catch (RuntimeException e) {
-            log.debug("RuntimeException :: " + e.getMessage());
+            e.getStackTrace();
         }
         return resultMap;
     }
 
     @Override
-    public Map<String, Object> legacyPrompt(CompletionRequestDTO requestDTO) {
+    public Map<String, Object> legacyPrompt(CompletionRequestDTO completionRequestDTO) {
         log.debug("[+] 레거시 프롬프트를 수행합니다.");
 
         // [STEP1] 토큰 정보가 포함된 Header를 가져옵니다.
         HttpHeaders headers = chatGPTConfig.httpHeaders();
 
         // [STEP5] 통신을 위한 RestTemplate을 구성합니다.
-        HttpEntity<CompletionRequestDTO> requestEntity = new HttpEntity<>(requestDTO, headers);
+        HttpEntity<CompletionRequestDTO> requestEntity = new HttpEntity<>(completionRequestDTO, headers);
         ResponseEntity<String> response = chatGPTConfig
                 .restTemplate()
                 .exchange(legacyPromptUrl, HttpMethod.POST, requestEntity, String.class);

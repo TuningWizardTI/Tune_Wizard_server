@@ -40,9 +40,10 @@ public class ChatGPTController {
     }
 
     @PostMapping("/prompt")
-    public ResponseEntity<Map<String, Object>> selectPrompt(@RequestBody CompletionRequestDTO completionRequestDTO) {
-        log.debug("param :: " + completionRequestDTO.toString());
-        Map<String, Object> result = chatGPTService.prompt(completionRequestDTO);
+    public ResponseEntity<Map<String, Object>> selectPrompt(@RequestBody ChatCompletionDTO chatCompletionDTO) {
+        log.debug("param :: " + chatCompletionDTO.toString());
+        System.out.println(chatCompletionDTO.toString());
+        Map<String, Object> result = chatGPTService.prompt(chatCompletionDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
