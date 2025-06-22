@@ -2,6 +2,8 @@ package com.hanati.cop.tuneWizard.controller;
 
 import com.hanati.cop.tuneWizard.dto.ChatCompletionDTO;
 import com.hanati.cop.tuneWizard.dto.CompletionRequestDTO;
+import com.hanati.cop.tuneWizard.dto.RAGServerRequestDTO;
+import com.hanati.cop.tuneWizard.service.CallHttpServiceImpl;
 import com.hanati.cop.tuneWizard.service.ChatGPTService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
@@ -14,10 +16,15 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@CrossOrigin(origins = " ")
 @RequestMapping(value = "/api/v1/chatGPT")
 public class ChatGPTController {
     public final ChatGPTService chatGPTService;
-    public ChatGPTController(ChatGPTService chatGPTService) {this.chatGPTService = chatGPTService;}
+    public final CallHttpServiceImpl callHttpService;
+    public ChatGPTController(ChatGPTService chatGPTService, CallHttpServiceImpl callHttpService) {
+        this.chatGPTService = chatGPTService;
+        this.callHttpService = callHttpService;
+    }
 
     @GetMapping("/modelList")
     public ResponseEntity<List<Map<String, Object>>> selectModelList() {
@@ -44,6 +51,14 @@ public class ChatGPTController {
         log.debug("param :: " + chatCompletionDTO.toString());
         System.out.println(chatCompletionDTO.toString());
         Map<String, Object> result = chatGPTService.prompt(chatCompletionDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/flask")
+    public ResponseEntity<Map<String, Object>> callflask(@RequestBody RAGServerRequestDTO ragServerRequestDTO) {
+        log.debug("param :: " + ragServerRequestDTO.toString());
+        System.out.println(ragServerRequestDTO.toString());
+        Map<String, Object> result = callHttpService.CallFlaskLLM(ragServerRequestDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

@@ -18,6 +18,8 @@ openai:
     legacy_promt: https://api.openai.com/v1/completions
     prompt: https://api.openai.com/v1/chat/completions
 
+flask:
+  url: http://localhost:8088/rag
 
 server:
   port: 8080
