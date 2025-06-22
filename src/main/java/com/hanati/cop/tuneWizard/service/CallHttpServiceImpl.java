@@ -3,8 +3,7 @@ package com.hanati.cop.tuneWizard.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanati.cop.tuneWizard.config.HttpCallConfig;
-import com.hanati.cop.tuneWizard.dto.ChatCompletionDTO;
+import com.hanati.cop.tuneWizard.config.ChatGPTConfig;
 import com.hanati.cop.tuneWizard.dto.RAGServerRequestDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -22,8 +21,11 @@ import java.util.Map;
 @Service
 public class CallHttpServiceImpl implements CallHttpService{
 
-    public HttpCallConfig httpCallConfig;
+    public ChatGPTConfig httpCallConfig;
 
+    public CallHttpServiceImpl(ChatGPTConfig httpCallConfig) {
+        this.httpCallConfig = httpCallConfig;
+    }
     @Value("${flask.url}")
     private String url;
 
@@ -57,6 +59,6 @@ public class CallHttpServiceImpl implements CallHttpService{
             e.getStackTrace();
         }
 
-        return null;
+        return resultMap;
     }
 }

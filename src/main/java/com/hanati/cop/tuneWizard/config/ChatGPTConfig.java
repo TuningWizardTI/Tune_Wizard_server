@@ -37,4 +37,14 @@ public class ChatGPTConfig {
         return headers;
     }
 
+    @Bean
+    public HttpHeaders httpHeadersOnlyContentType() {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        System.out.println(headers.toString());
+        return headers;
+    }
+
+
 }
