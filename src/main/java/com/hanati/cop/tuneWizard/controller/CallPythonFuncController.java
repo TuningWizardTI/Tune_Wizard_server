@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@Slf4j
 @RequestMapping(value = "/api/v1/PythonTest")
 public class CallPythonFuncController {
     private static final Logger log = LoggerFactory.getLogger(CallPythonFuncController.class);

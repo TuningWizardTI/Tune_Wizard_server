@@ -5,6 +5,7 @@ import com.hanati.cop.tuneWizard.dto.CompletionRequestDTO;
 import com.hanati.cop.tuneWizard.dto.RAGServerRequestDTO;
 import com.hanati.cop.tuneWizard.service.CallHttpServiceImpl;
 import com.hanati.cop.tuneWizard.service.ChatGPTService;
+import com.hanati.cop.tuneWizard.service.DBDataServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
@@ -21,9 +22,13 @@ import java.util.Map;
 public class ChatGPTController {
     public final ChatGPTService chatGPTService;
     public final CallHttpServiceImpl callHttpService;
-    public ChatGPTController(ChatGPTService chatGPTService, CallHttpServiceImpl callHttpService) {
+    public final DBDataServiceImpl dbDataServiceImpl;
+    public ChatGPTController(ChatGPTService chatGPTService
+            , CallHttpServiceImpl callHttpService
+            , DBDataServiceImpl dbDataServiceImpl) {
         this.chatGPTService = chatGPTService;
         this.callHttpService = callHttpService;
+        this.dbDataServiceImpl = dbDataServiceImpl;
     }
 
     @GetMapping("/modelList")
@@ -61,5 +66,12 @@ public class ChatGPTController {
         Map<String, Object> result = callHttpService.CallFlaskLLM(ragServerRequestDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-}
 
+    @PostMapping("/tableList")
+    public ResponseEntity<List<String>> tableList() {
+        List<String> result = dbDataServiceImpl.tableList();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
+}
