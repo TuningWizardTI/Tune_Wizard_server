@@ -2,12 +2,15 @@ package com.hanati.cop.tuneWizard.service;
 
 import com.hanati.cop.tuneWizard.config.ChatGPTConfig;
 import com.hanati.cop.tuneWizard.dao.ChatTableListDAO;
+import com.hanati.cop.tuneWizard.dao.MakePromptTableInfoDAO;
+import com.hanati.cop.tuneWizard.dto.TableInfoListRequestDTO;
 import com.hanati.cop.tuneWizard.mapper.TITuneMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,11 +39,31 @@ public class DBDataServiceImpl implements DBDataService{
 
     }
 
-    public List<String> columnList() {
+    public List<String> tableIndexList() {
         return null;
     }
 
     public List<String> indexList() {
         return null;
+    }
+
+    @Override
+    public HashMap<String, ArrayList<String>> makePromptTableInfo(TableInfoListRequestDTO tableInfoListRequestDTO) {
+        System.out.println("tableName" + tableInfoListRequestDTO.getTableName());
+        HashMap<String, ArrayList<String>> result = new HashMap<>();
+        List<MakePromptTableInfoDAO> tableinfolist = mapperClass.tableInfoList(tableInfoListRequestDTO.getTableName());
+        ArrayList<String> columeList = new ArrayList<String>();
+        ArrayList<String> columeType = new ArrayList<String>();
+
+        for(int i = 0; i<tableinfolist.size(); i ++) {
+            columeList.add(tableinfolist.get(i).getColumn_name());
+            columeType.add(tableinfolist.get(i).getColume_type());
+            System.out.println("ColumnName = " + tableinfolist.get(i).getColumn_name() + "\nColumnType = " + tableinfolist.get(i).getColume_type());
+        }
+
+        result.put("Column",columeList);
+        result.put("Type",columeType);
+
+        return result;
     }
 }

@@ -1,7 +1,7 @@
-package com.hanati.cop.tuneWizard.service;
+package com.hanati.cop.tuneWizard.legacy.service;
 
-import com.hanati.cop.tuneWizard.dto.ChatCompletionDTO;
-import com.hanati.cop.tuneWizard.dto.CompletionRequestDTO;
+import com.hanati.cop.tuneWizard.legacy.dto.ChatCompletionDTO;
+import com.hanati.cop.tuneWizard.legacy.dto.CompletionRequestDTO;
 
 import java.util.List;
 import java.util.Map;

@@ -1,16 +1,13 @@
-package com.hanati.cop.tuneWizard.service;
+package com.hanati.cop.tuneWizard.legacy.service;
 
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanati.cop.tuneWizard.config.ChatGPTConfig;
-import com.hanati.cop.tuneWizard.dto.ChatCompletionDTO;
-import com.hanati.cop.tuneWizard.dto.ChatRequestMsgDTO;
-import com.hanati.cop.tuneWizard.dto.CompletionRequestDTO;
-import lombok.RequiredArgsConstructor;
+import com.hanati.cop.tuneWizard.legacy.dto.ChatCompletionDTO;
+import com.hanati.cop.tuneWizard.legacy.dto.CompletionRequestDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

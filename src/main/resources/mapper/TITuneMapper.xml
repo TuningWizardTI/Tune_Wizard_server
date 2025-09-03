@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanati.cop.tuneWizard.mapper.TITuneMapper">
+    <select id="tableList"  resultType="com.hanati.cop.tuneWizard.dao.ChatTableListDAO">
+        SELECT TABLE_NAME FROM ALL_TABLES WHERE OWNER = 'TI_COP'
+    </select>
+    <select id="tableIndexList"  resultType="com.hanati.cop.tuneWizard.dao.ChatTableIndexListDAO">
+        SELECT INDEX_NAME, COLUMN_NAME
+          FROM ALL_IND_COLUMNS
+         WHERE INDEX_OWNER = 'TI_COP'
+           AND TABLE_NAME = #{tableName}
+    </select>
+    <select id="tableInfoList"  resultType="com.hanati.cop.tuneWizard.dao.MakePromptTableInfoDAO">
+        SELECT atc.column_name as column_name,
+        CASE
+            WHEN atc.data_type IN ('CHAR','NCHAR','VARCHAR2','NVARCHAR2') THEN atc.data_type || '(' || atc.char_length || ')'
+            WHEN atc.data_type IN ('NUMBER') AND atc.data_precision IS NOT NULL THEN atc.data_type || '(' || atc.data_precision || NVL2(atc.data_scale, ','||atc.data_scale, '') || ')'
+            WHEN atc.data_type IN ('FLOAT') AND atc.data_precision IS NOT NULL THEN atc.data_type || '(' || atc.data_precision || ')'
+            ELSE atc.data_type
+        END AS colume_type
+          FROM all_tab_columns atc
+         WHERE atc.owner = 'TI_COP'
+           AND atc.table_name = #{tableName}
+         ORDER BY atc.table_name, atc.column_id
+    </select>
+</mapper>

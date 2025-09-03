@@ -1,10 +1,9 @@
-package com.hanati.cop.tuneWizard.controller;
+package com.hanati.cop.tuneWizard.legacy.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanati.cop.tuneWizard.dto.ChatCompletionDTO;
-import lombok.extern.slf4j.Slf4j;
+import com.hanati.cop.tuneWizard.legacy.dto.ChatCompletionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

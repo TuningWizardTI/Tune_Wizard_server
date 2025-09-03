@@ -1,4 +1,4 @@
-package com.hanati.cop.tuneWizard.dto;
+package com.hanati.cop.tuneWizard.legacy.dto;
 
 import lombok.Builder;
 import lombok.Getter;

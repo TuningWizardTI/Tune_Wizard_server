@@ -32,7 +32,6 @@ public class ChatGPTConfig {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(secretKey);
         System.out.println(headers.toString());
         return headers;
     }

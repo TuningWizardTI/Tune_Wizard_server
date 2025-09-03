@@ -7,5 +7,4 @@ import java.util.Map;
 
 public interface CallHttpService {
     Map<String, Object>  CallFlaskLLM (RAGServerRequestDTO rag) ;
-
 }
