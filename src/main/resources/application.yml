@@ -22,7 +22,7 @@ flask:
   url: http://localhost:8088/rag
 
 server:
-  port: 8080
+  port: 8088
 
 
 # mybatis 매핑 type을 짧게 쓰기 위한 설정
