@@ -2,7 +2,9 @@ package com.hanati.cop.tuneWizard.service;
 
 import com.hanati.cop.tuneWizard.config.ChatGPTConfig;
 import com.hanati.cop.tuneWizard.dao.ChatTableListDAO;
+import com.hanati.cop.tuneWizard.dao.GetPromptHistoryDAO;
 import com.hanati.cop.tuneWizard.dao.MakePromptTableInfoDAO;
+import com.hanati.cop.tuneWizard.dao.TableCountDAO;
 import com.hanati.cop.tuneWizard.dto.TableInfoListRequestDTO;
 import com.hanati.cop.tuneWizard.mapper.TITuneMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +57,7 @@ public class DBDataServiceImpl implements DBDataService{
         ArrayList<String> columeList = new ArrayList<String>();
         ArrayList<String> columeType = new ArrayList<String>();
 
+
         for(int i = 0; i<tableinfolist.size(); i ++) {
             columeList.add(tableinfolist.get(i).getColumn_name());
             columeType.add(tableinfolist.get(i).getColume_type());
@@ -65,5 +68,15 @@ public class DBDataServiceImpl implements DBDataService{
         result.put("Type",columeType);
 
         return result;
+    }
+
+    @Override
+    public List<GetPromptHistoryDAO> getPromptHistory() {
+        HashMap<String, ArrayList<String>> result = new HashMap<>();
+        List<GetPromptHistoryDAO> historyList = mapperClass.listHistory();
+
+        //일단 요정도만 불러내보자
+
+        return historyList;
     }
 }

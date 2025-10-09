@@ -1,6 +1,7 @@
 package com.hanati.cop.tuneWizard.service;
 
 import com.hanati.cop.tuneWizard.dao.ChatTableListDAO;
+import com.hanati.cop.tuneWizard.dao.GetPromptHistoryDAO;
 import com.hanati.cop.tuneWizard.dao.MakePromptTableInfoDAO;
 import com.hanati.cop.tuneWizard.dto.TableInfoListRequestDTO;
 import org.springframework.stereotype.Service;
@@ -19,4 +20,7 @@ public interface DBDataService {
     List<String> indexList();
 
     HashMap<String, ArrayList<String>> makePromptTableInfo(TableInfoListRequestDTO tableInfoListRequestDTO);
+
+    List<GetPromptHistoryDAO> getPromptHistory();
+
 }

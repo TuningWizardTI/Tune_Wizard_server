@@ -25,4 +25,28 @@
            AND atc.table_name = #{tableName}
          ORDER BY atc.table_name, atc.column_id
     </select>
+    <select id="tableCount" parameterType="string" resultType="com.hanati.cop.tuneWizard.dao.TableCountDAO">
+        SELECT count(*) as CNT
+          FROM ${tableName}
+    </select>
+    <insert id="insertPrompt" parameterType="com.hanati.cop.tuneWizard.dao.PromptInsertDAO" useGeneratedKeys="true">
+        INSERT INTO PROMPT_HISTORY
+        (UUID, PROMPT_TEXT, RESPONSE_TEXT, MODEL_NAME, CALL_DATE, CALL_TIME, CREATED_AT, UPDATED_AT)
+        VALUES
+        (#{uuid}, #{prompt_text,jdbcType=CLOB}, #{response_text,jdbcType=CLOB},
+        'GPT-4o', #{call_date}, #{call_time}, SYSDATE, SYSDATE)
+    </insert>
+    <select id="listHistory" resultType="com.hanati.cop.tuneWizard.dao.GetPromptHistoryDAO">
+        SELECT
+            UUID          as uuid,
+            PROMPT_TEXT   as promptText,
+            RESPONSE_TEXT as responseText,
+            MODEL_NAME    as modelName,
+            CALL_DATE     as callDate,
+            CALL_TIME     as callTime,
+            CREATED_AT    as createdAt,
+            UPDATED_AT    as updatedAt
+        FROM PROMPT_HISTORY
+        ORDER BY CREATED_AT DESC
+    </select>
 </mapper>

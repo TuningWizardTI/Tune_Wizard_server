@@ -1,8 +1,6 @@
 package com.hanati.cop.tuneWizard.mapper;
 
-import com.hanati.cop.tuneWizard.dao.ChatTableIndexListDAO;
-import com.hanati.cop.tuneWizard.dao.ChatTableListDAO;
-import com.hanati.cop.tuneWizard.dao.MakePromptTableInfoDAO;
+import com.hanati.cop.tuneWizard.dao.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,4 +12,9 @@ public interface TITuneMapper {
 
     List<MakePromptTableInfoDAO> tableInfoList(String tableName);
 
+    TableCountDAO tableCount(String tableName);
+
+    int insertPrompt(PromptInsertDAO promptInsertDAO);
+
+    List<GetPromptHistoryDAO> listHistory();
 }

@@ -1,5 +1,6 @@
 package com.hanati.cop.tuneWizard.controller;
 
+import com.hanati.cop.tuneWizard.dao.GetPromptHistoryDAO;
 import com.hanati.cop.tuneWizard.dto.RAGServerRequestDTO;
 import com.hanati.cop.tuneWizard.dto.TableInfoListRequestDTO;
 import com.hanati.cop.tuneWizard.service.CallHttpServiceImpl;
@@ -47,6 +48,12 @@ public class ChatGPTController {
     @PostMapping("/tableInfoList")
     public ResponseEntity<HashMap<String, ArrayList<String>>> tableInfoList(@RequestBody TableInfoListRequestDTO tableInfoListRequestDTO){
         HashMap<String, ArrayList<String>> result = dbDataServiceImpl.makePromptTableInfo(tableInfoListRequestDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/promptHistory")
+    public ResponseEntity<List<GetPromptHistoryDAO>> promptHistory(){
+        List<GetPromptHistoryDAO> result = dbDataServiceImpl.getPromptHistory();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
