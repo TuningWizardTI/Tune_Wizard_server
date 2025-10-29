@@ -4,7 +4,7 @@
 
 <mapper namespace="com.hanati.cop.tuneWizard.mapper.TITuneMapper">
     <select id="tableList"  resultType="com.hanati.cop.tuneWizard.dao.ChatTableListDAO">
-        SELECT TABLE_NAME FROM ALL_TABLES WHERE OWNER = 'TI_COP'
+        SELECT TABLE_NAME FROM ALL_TABLES WHERE OWNER = 'TI_COP' AND TABLE_NAME NOT IN ('PROMPT_HISTORY','LOGIN_INFO')
     </select>
     <select id="tableIndexList"  resultType="com.hanati.cop.tuneWizard.dao.ChatTableIndexListDAO">
         SELECT INDEX_NAME, COLUMN_NAME
@@ -31,14 +31,32 @@
     </select>
     <insert id="insertPrompt" parameterType="com.hanati.cop.tuneWizard.dao.PromptInsertDAO" useGeneratedKeys="true">
         INSERT INTO PROMPT_HISTORY
-        (UUID, PROMPT_TEXT, RESPONSE_TEXT, MODEL_NAME, CALL_DATE, CALL_TIME, CREATED_AT, UPDATED_AT)
+        (
+          UUID
+        , PROMPT_TEXT
+        , RESPONSE_TEXT
+        , USER_ID
+        , MODEL_NAME
+        , CALL_DATE
+        , CALL_TIME
+        , CREATED_AT
+        , UPDATED_AT)
         VALUES
-        (#{uuid}, #{prompt_text,jdbcType=CLOB}, #{response_text,jdbcType=CLOB},
-        'GPT-4o', #{call_date}, #{call_time}, SYSDATE, SYSDATE)
+        (
+          #{uuid}
+        , #{prompt_text,jdbcType=CLOB}
+        , #{response_text,jdbcType=CLOB}
+        , #{user_id}
+        , 'GPT-4o'
+        , #{call_date}
+        , #{call_time}
+        , SYSDATE
+        , SYSDATE)
     </insert>
     <select id="listHistory" resultType="com.hanati.cop.tuneWizard.dao.GetPromptHistoryDAO">
         SELECT
             UUID          as uuid,
+            USER_ID       as userId,
             PROMPT_TEXT   as promptText,
             RESPONSE_TEXT as responseText,
             MODEL_NAME    as modelName,
@@ -47,6 +65,45 @@
             CREATED_AT    as createdAt,
             UPDATED_AT    as updatedAt
         FROM PROMPT_HISTORY
+        WHERE USER_ID = #{userId}
         ORDER BY CREATED_AT DESC
+    </select>
+    <insert id="insertUserInfo" parameterType="com.hanati.cop.tuneWizard.dao.LoginInfoTableDAO" useGeneratedKeys="true">
+        INSERT INTO LOGIN_INFO
+        (
+          USER_ID
+        , PASSWORD
+        , USER_NAME
+        , LOGIN_STATUS
+        , LAST_LOGIN_AT
+        , LAST_LOGOUT_AT
+        , CREATED_AT, UPDATED_AT)
+        VALUES
+        (
+          #{userId}
+        , #{password}
+        , #{userName}
+        , 'N'
+        , SYSDATE
+        , SYSDATE
+        , SYSDATE
+        , SYSDATE)
+    </insert>
+    <!-- 로그인 상태 업데이트 -->
+    <update id="updateUserInfo" >
+        UPDATE LOGIN_INFO
+        SET LOGIN_STATUS = #{status},
+        LAST_LOGIN_AT = CASE WHEN #{status} = 'Y' THEN SYSTIMESTAMP ELSE LAST_LOGIN_AT END,
+        LAST_LOGOUT_AT = CASE WHEN #{status} = 'N' THEN SYSTIMESTAMP ELSE LAST_LOGOUT_AT END,
+        UPDATED_AT = SYSTIMESTAMP
+        WHERE USER_ID = #{userId}
+    </update>
+    <select id="inquiryUserInfo" resultType="com.hanati.cop.tuneWizard.dao.LoginInfoTableDAO">
+        SELECT
+              USER_ID   as userId
+            , PASSWORD  as password
+            , USER_NAME as userName
+        FROM LOGIN_INFO
+        WHERE USER_ID = #{userId,  jdbcType=VARCHAR}
     </select>
 </mapper>

@@ -13,10 +13,12 @@ public class RAGServerRequestDTO {
     String query;
     String table;
     String indexList;
+    String userId;
     @Builder
-    RAGServerRequestDTO(String query, String table, String indexList) {
+    RAGServerRequestDTO(String query, String table, String indexList, String userId) {
         this.query = query;
         this.table = table;
         this.indexList = indexList;
+        this.userId = userId;
     }
 }

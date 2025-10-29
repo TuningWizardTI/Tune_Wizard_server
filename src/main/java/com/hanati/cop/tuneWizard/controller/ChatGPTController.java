@@ -1,8 +1,7 @@
 package com.hanati.cop.tuneWizard.controller;
 
 import com.hanati.cop.tuneWizard.dao.GetPromptHistoryDAO;
-import com.hanati.cop.tuneWizard.dto.RAGServerRequestDTO;
-import com.hanati.cop.tuneWizard.dto.TableInfoListRequestDTO;
+import com.hanati.cop.tuneWizard.dto.*;
 import com.hanati.cop.tuneWizard.service.CallHttpServiceImpl;
 import com.hanati.cop.tuneWizard.legacy.service.ChatGPTService;
 import com.hanati.cop.tuneWizard.service.DBDataServiceImpl;
@@ -52,8 +51,26 @@ public class ChatGPTController {
     }
 
     @PostMapping("/promptHistory")
-    public ResponseEntity<List<GetPromptHistoryDAO>> promptHistory(){
-        List<GetPromptHistoryDAO> result = dbDataServiceImpl.getPromptHistory();
+    public ResponseEntity<List<GetPromptHistoryDAO>> promptHistory(@RequestBody GetPromptHistoryDTO getPromptHistoryDTO){
+        List<GetPromptHistoryDAO> result = dbDataServiceImpl.getPromptHistory(getPromptHistoryDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/loginTuneWizard")
+    public ResponseEntity<HashMap<String, LoginResponseDTO>> loginTuneWizard(@RequestBody LoginRequestDTO loginRequestDTO){
+        HashMap<String, LoginResponseDTO> result = dbDataServiceImpl.loginUser(loginRequestDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/logoutTuneWizard")
+    public ResponseEntity<HashMap<String, LoginResponseDTO>> logoutTuneWizard(@RequestBody LoginRequestDTO loginRequestDTO){
+        HashMap<String, LoginResponseDTO> result = dbDataServiceImpl.logoutUser(loginRequestDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/sighupTuneWizard")
+    public ResponseEntity<HashMap<String, LoginResponseDTO>> sighupTuneWizard(@RequestBody SignUpUserInfoRequestDTO signUpUserInfoRequestDTO){
+        HashMap<String, LoginResponseDTO> result = dbDataServiceImpl.signUpUser(signUpUserInfoRequestDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

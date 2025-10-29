@@ -3,7 +3,7 @@ package com.hanati.cop.tuneWizard.service;
 import com.hanati.cop.tuneWizard.dao.ChatTableListDAO;
 import com.hanati.cop.tuneWizard.dao.GetPromptHistoryDAO;
 import com.hanati.cop.tuneWizard.dao.MakePromptTableInfoDAO;
-import com.hanati.cop.tuneWizard.dto.TableInfoListRequestDTO;
+import com.hanati.cop.tuneWizard.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +21,10 @@ public interface DBDataService {
 
     HashMap<String, ArrayList<String>> makePromptTableInfo(TableInfoListRequestDTO tableInfoListRequestDTO);
 
-    List<GetPromptHistoryDAO> getPromptHistory();
+    List<GetPromptHistoryDAO> getPromptHistory(GetPromptHistoryDTO getPromptHistoryDTO);
+    HashMap<String, LoginResponseDTO> signUpUser(SignUpUserInfoRequestDTO signUpUserInfoRequestDTO);
+
+    HashMap<String, LoginResponseDTO> loginUser(LoginRequestDTO loginRequestDTO);
+    HashMap<String, LoginResponseDTO> logoutUser(LoginRequestDTO loginRequestDTO);
 
 }

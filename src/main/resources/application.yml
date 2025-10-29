@@ -4,9 +4,9 @@ spring:
   ## oracle
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@15.164.103.59:1521:xe
+    url: jdbc:oracle:thin:@15.164.103.59:2521:xe
     username: ti_cop
-    password: ti_cop1234
+    password: ti_cop12345
 
 chatgpt:
   apikey:

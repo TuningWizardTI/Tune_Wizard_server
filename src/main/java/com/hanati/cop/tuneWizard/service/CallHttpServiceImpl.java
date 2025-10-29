@@ -103,6 +103,7 @@ public class CallHttpServiceImpl implements CallHttpService{
         PromptInsertDAO promptInsertDAO = new PromptInsertDAO();
         promptInsertDAO.setUuid(UUID.randomUUID().toString());
         promptInsertDAO.setPrompt_text(query);
+        promptInsertDAO.setUser_id(rag.getUserId());
         promptInsertDAO.setResponse_text(answer_data);
         promptInsertDAO.setCall_date(getTodayDate());
         promptInsertDAO.setCall_time(getNowTime());

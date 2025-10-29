@@ -16,5 +16,12 @@ public interface TITuneMapper {
 
     int insertPrompt(PromptInsertDAO promptInsertDAO);
 
-    List<GetPromptHistoryDAO> listHistory();
+    List<GetPromptHistoryDAO> listHistory(String userId);
+
+    int insertUserInfo(LoginInfoTableDAO loginInfoTableDAO);
+
+    int updateUserInfo(String status, String userId);
+
+    List<LoginInfoTableDAO> inquiryUserInfo(String userId);
+
 }
