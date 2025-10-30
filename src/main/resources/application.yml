@@ -7,6 +7,9 @@ spring:
     url: jdbc:oracle:thin:@15.164.103.59:2521:xe
     username: ti_cop
     password: ti_cop12345
+    hikari:
+      data-source-properties:
+        oracle.jdbc.timezoneAsRegion: false
 
 chatgpt:
   apikey:
